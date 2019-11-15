@@ -1,0 +1,19 @@
+@import "./../vars";
+
+.dev-content-portfolio {
+  width: 1070px;
+
+  &__block {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+  }
+
+  .swiper-slide {
+    height: auto;
+  }
+}
+
+.dev-portfolio-filter {
+  width: 500px
+}

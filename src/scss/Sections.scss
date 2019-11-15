@@ -1,0 +1,47 @@
+@import "vars";
+
+.dev-sections-list {
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style-type: none;
+    box-shadow: $base-box-shadow;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 15px 30px;
+    align-items: center;
+    padding: 23px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $hover-box-shadow;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1em;
+    }
+
+    &.is-active {
+      background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%))
+    }
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+
+    svg{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__text {
+    .is-active > & {
+      color: white;
+    }
+  }
+
+}

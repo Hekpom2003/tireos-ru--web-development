@@ -1,0 +1,19 @@
+
+.web-development {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-gap: 30px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__sections {
+    grid-row: 1/3;
+  }
+
+  &__elements {
+
+  }
+}

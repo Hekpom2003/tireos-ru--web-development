@@ -1,0 +1,46 @@
+@import "vars";
+
+.div-elements-list {
+  padding: 0;
+  margin: 0 ;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+
+  li {
+    list-style-type: none;
+    box-shadow: $base-box-shadow;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-gap: 5px;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $hover-box-shadow;
+    }
+
+    &.is-active {
+      background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%));
+    }
+  }
+
+  &__title {
+    color: #333;
+    font-size: 18px;
+
+    .is-active > & {
+      color: white;
+    }
+  }
+
+  &__price {
+    color: $primary-color;
+
+    .is-active > & {
+      color: white;
+    }
+  }
+}

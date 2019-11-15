@@ -1,0 +1,1 @@
+export const SECTIONS__SET_ITEMS = 'SECTIONS__SET_ITEMS';

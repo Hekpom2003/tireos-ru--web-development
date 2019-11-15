@@ -1,0 +1,13 @@
+@import "../vars";
+
+.content-header {
+  margin-bottom: 30px;
+  &__title {
+    font-size: 38px;
+  }
+
+  &__description {
+    font-weight: bold;
+    color: $primary-color;
+  }
+}

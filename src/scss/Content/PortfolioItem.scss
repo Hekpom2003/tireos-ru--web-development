@@ -1,0 +1,129 @@
+@import "./../vars";
+
+.dev-portfolio-item {
+  width: 336px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+  border: 1px solid $grey-light;
+  border-radius: $base-border-radius;
+  overflow: hidden;
+  box-shadow: $base-box-shadow;
+
+  &:hover {
+    box-shadow: $hover-box-shadow;
+  }
+
+  &__image {
+    height: 200px;
+    width: 100%;
+    margin: 0 0 30px 0;
+    padding: 0;
+    background-color: #eee;
+    display: flex;
+
+
+    li {
+      height: calc(100% - 6px);
+      list-style-type: none;
+      flex-grow: 1;
+      border-bottom: 3px solid fade_out($primary-color, 0.5);
+
+      &:not(:last-child) {
+        margin-right: 0.5em;
+      }
+
+      &.is-active {
+        border-color: $primary-color;
+      }
+    }
+
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 1em;
+
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+
+    &.dev-portfolio-item__row--title {
+      margin-bottom: 1em;
+
+      .dev-portfolio-item {
+        &__title {
+          font-weight: bold;
+
+
+          &:after {
+            display: none;
+          }
+        }
+
+        &__value {
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+        }
+      }
+    }
+
+
+  }
+
+  &__title {
+    position: relative;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 200%;
+      bottom: 4px;
+      left: 0;
+      z-index: 1;
+      height: 2px;
+      border-bottom: 1px dotted $grey;
+    }
+
+    span {
+      position: relative;
+      z-index: 2;
+      background-color: white;
+      padding-right: 0.25em;
+    }
+  }
+
+  &__value {
+    text-align: right;
+    border-color: white;
+
+    span {
+      position: relative;
+      z-index: 2;
+      background-color: white;
+      padding-left: 0.25em;
+    }
+  }
+
+  &__description {
+    color: $grey;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__props {
+    margin-bottom: 1em;
+  }
+
+  &__buttons {
+    padding: 0 1em 2em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+}
+

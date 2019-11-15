@@ -1,0 +1,26 @@
+@import "../vars";
+
+.dev-portfolio-sort {
+  display: flex;
+
+  &__title {
+    margin-right: 0.5em;
+  }
+
+
+  &__variants {
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    li {
+      list-style-type: none;
+      margin-right: 1em;
+      cursor: pointer;
+
+      &.is-active {
+        color: $primary-color;
+      }
+    }
+  }
+}
