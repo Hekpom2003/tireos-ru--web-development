@@ -6,14 +6,19 @@
 
   li {
     list-style-type: none;
-    box-shadow: $base-box-shadow;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-gap: 15px 30px;
-    align-items: center;
-    padding: 23px 30px;
-    border-radius: 4px;
-    cursor: pointer;
+
+    a {
+      color: $black;
+      box-shadow: $base-box-shadow;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: 15px 30px;
+      align-items: center;
+      padding: 23px 30px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
     &:hover {
       box-shadow: $hover-box-shadow;
@@ -23,16 +28,21 @@
       margin-bottom: 1em;
     }
 
+
     &.is-active {
-      background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%))
+      a {
+        background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%));
+        color: white;
+      }
     }
+
   }
 
   &__icon {
     width: 32px;
     height: 32px;
 
-    svg{
+    svg {
       width: 100%;
       height: 100%;
     }

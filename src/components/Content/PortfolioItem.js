@@ -12,10 +12,15 @@ class PortfolioItem extends React.Component {
         };
 
         this.changeImageHandler = this.changeImageHandler.bind(this);
+        this.showModalHandler = this.showModalHandler.bind(this);
     }
 
     changeImageHandler(activeImageIndex) {
         this.setState({activeImageIndex})
+    }
+
+    showModalHandler(){
+        this.setState({showModal: !this.state.showModal});
     }
 
 
@@ -60,9 +65,12 @@ class PortfolioItem extends React.Component {
                 </div>
 
                 <div className="dev-portfolio-item__buttons">
-                    <a href={this.props.link} className="btn btn--primary-color" role="button">Подробнее</a>
-                    <a href={this.props.link} className="btn btn--primary-color" role="button">Взять за основу</a>
+                    <a href={this.props.link} className="dev-portfolio-item__button-1" role="button">Подробнее</a>
+                    <span className="dev-portfolio-item__button-2" role="button" onClick={()=>this.props.showModal(this.props)}>
+                        Взять за основу
+                    </span>
                 </div>
+
             </div>
         );
     }

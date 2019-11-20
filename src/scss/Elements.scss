@@ -2,28 +2,37 @@
 
 .div-elements-list {
   padding: 0;
-  margin: 0 ;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1em;
 
   li {
     list-style-type: none;
-    box-shadow: $base-box-shadow;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    grid-gap: 5px;
-    align-items: center;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
+
+    a {
+      box-shadow: $base-box-shadow;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      grid-gap: 5px;
+      align-items: center;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
     &:hover {
-      box-shadow: $hover-box-shadow;
+
+      a {
+        box-shadow: $hover-box-shadow;
+      }
     }
 
     &.is-active {
-      background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%));
+      a {
+        background-image: linear-gradient(45deg, $primary-color, lighten($primary-color, 15%));
+      }
     }
   }
 
@@ -31,7 +40,7 @@
     color: #333;
     font-size: 18px;
 
-    .is-active > & {
+    .is-active > a & {
       color: white;
     }
   }
@@ -39,7 +48,7 @@
   &__price {
     color: $primary-color;
 
-    .is-active > & {
+    .is-active > a & {
       color: white;
     }
   }

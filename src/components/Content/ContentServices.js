@@ -17,13 +17,13 @@ class ContentServices extends React.Component {
         this.stateHandler = this.stateHandler.bind(this);
     }
 
-    stateHandler(){
-        this.setState({showAll:!this.state.showAll});
+    stateHandler() {
+        this.setState({showAll: !this.state.showAll});
     }
 
     drawItems() {
 
-        const items = this.state.showAll ? this.props.services : this.props.services.slice(0,8);
+        const items = this.state.showAll ? this.props.services : this.props.services.slice(0, 8);
 
         return <ul>
             {
@@ -50,17 +50,23 @@ class ContentServices extends React.Component {
     }
 
     render() {
-        return (
-            <div className="dev-services-list">
 
-                <h2>Вам может понадобиться</h2>
+        if (this.props.services.length === 0) {
+            return null;
+        } else {
 
-                {this.drawItems()}
+            return (
+                <div className="dev-services-list">
 
-                {this.getButton()}
+                    <h2>Вам может понадобиться</h2>
 
-            </div>
-        );
+                    {this.drawItems()}
+
+                    {this.getButton()}
+
+                </div>
+            );
+        }
     }
 }
 

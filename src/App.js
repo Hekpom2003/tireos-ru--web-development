@@ -18,45 +18,65 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {showPreloader: true};
+        this.state = {
+            showPreloader: true,
+            // siteparams: this.props.match.params,
+        };
 
         this.url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://dima.temploid.ru' : "";
         this.url += '/local/ajax/web-development.php';
 
 
-        this.changeElement = this.changeElement.bind(this);
-        this.changeSection = this.changeSection.bind(this);
         this.getDataFromServer = this.getDataFromServer.bind(this);
     }
 
-    changeSection(sectionId) {
-        this.getDataFromServer(sectionId);
-    }
-
-    changeElement(elementId) {
-        this.setState({showPreloader: !this.state.showPreloader});
-        this.getDataFromServer(this.props.current.sectionId, elementId)
-    }
-
-    getDataFromServer(sectionId = false, elementId = false) {
-
-        const body = {};
-        if (sectionId) body.sectionId = sectionId;
-        if (elementId) body.elementId = elementId;
-
-        fetch(this.url, {
-            method: 'post',
-            body: JSON.stringify(body),
-        })
-            .then(res => res.json())
-            .then(json => {
-                this.props._setDataFromServer(json);
-                this.setState({showPreloader: false})
-            });
-    }
-
     componentDidMount() {
-        this.getDataFromServer();
+        const {params} = this.props.match;
+        this.getDataFromServer(params);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {params} = this.props.match;
+        this.getDataFromServer(params);
+    }
+
+    getDataFromServer(params) {
+        let body = {};
+        body.sectionCode = params.sectionCode || null;
+        body.elementCode = params.elementCode || null;
+
+
+
+        let getData = false; // Флаг на получение данных
+
+        if (body.elementCode === null) {
+            getData = (body.sectionCode !== this.props.current.sectionCode);
+        } else {
+            getData = (
+                body.sectionCode !== this.props.current.sectionCode ||
+                body.elementCode !== this.props.current.elementCode
+            );
+        }
+
+        console.log('getData',getData);
+
+
+
+        // Проверяем state чтобы не соответствовал текущему запросу на cервер для избежания зацикливания
+        if (getData) {
+
+            body = JSON.stringify(body);
+
+            fetch(this.url, {
+                method: 'post',
+                body,
+            })
+                .then(res => res.json())
+                .then(json => {
+                    this.props._setDataFromServer(json);
+                    this.setState({showPreloader: false})
+                });
+        }
     }
 
     render() {
@@ -68,8 +88,8 @@ class App extends React.Component {
         } else {
             return (
                 <div className="web-development">
-                    <Sections changeSection={sectionId => this.changeSection(sectionId)}/>
-                    <Elements changeElement={elementId => this.changeElement(elementId)}/>
+                    <Sections/>
+                    <Elements/>
                     <Content/>
                 </div>
             )

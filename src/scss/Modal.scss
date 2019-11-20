@@ -1,0 +1,181 @@
+@import "vars";
+
+.dev-modal {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000060;
+  }
+
+  &__body {
+    background-color: white;
+    padding: 2em 3em;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__close {
+    position: absolute;
+    right: 1.2em;
+    top: 0.9em;
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+
+    &:hover {
+      &:before,&:after {
+          background-color: $black;
+      }
+    }
+
+    @mixin _close($rotate){
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background-color: $grey-light;
+      transform: translateX(-50%) rotateZ($rotate);
+      transform-origin: center;
+      position: absolute;
+      left: 50%;
+      transition: 0.3s ease all;
+    }
+
+    &:before{
+      @include _close(45deg);
+    }
+    &:after {
+      @include _close(-45deg);
+    }
+  }
+
+  &__title {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+
+    span {
+      font-weight: bold;
+    }
+
+  }
+
+  &__input {
+    position: relative;
+    margin-bottom: 1em;
+
+    input{
+      width: 100%;
+      padding: 0.75em 1.25em;
+
+      &.is-filled + label,
+      &:focus + label{
+        font-size: 0.8em;
+        top: 0;
+        transform: translateY(-50%);
+      }
+
+      & + label {
+        padding: 0.25em;
+        background-color: white;
+        position: absolute;
+        left: 1.25em;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 0.3s ease all;
+      }
+    }
+  }
+
+  &__textarea {
+    position: relative;
+    margin-bottom: 1em;
+
+    textarea{
+      width: 100%;
+      padding: 0.75em 1.25em;
+
+      &.is-filled + label,
+      &:focus + label{
+        font-size: 0.8em;
+        top: 0;
+        transform: translateY(-50%);
+      }
+
+      & + label {
+        padding: 0.25em;
+        background-color: white;
+        position: absolute;
+        left: 1.25em;
+        top: 0.5em;
+        transform: translateY(0);
+        transition: 0.3s ease all;
+      }
+    }
+  }
+
+
+  &__checkbox {
+    margin-bottom: 1em;
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+
+    &-title {
+      grid-column: 1/5;
+      margin-bottom: 0.5em;
+    }
+
+    &-item {
+      margin-right: 2em;
+    }
+
+    input {
+      display: none;
+
+      &:checked + label {
+        &:after {
+          content: '';
+          display: block;
+          width: 10px;
+          height: 5px;
+          border-bottom: 2px solid $primary-color;
+          border-left: 2px solid $primary-color;
+          position: absolute;
+          left: 3px;
+          top: 3px;
+          transform-origin: center;
+          transform: rotateZ(-45deg);
+        }
+      }
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &:before {
+        content: '';
+        display: block;
+        width: 1em;
+        height: 1em;
+        border: 1px solid $grey-light;
+        margin-right: 0.5em;
+      }
+    }
+
+  }
+
+}

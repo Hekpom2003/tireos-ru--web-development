@@ -10,6 +10,8 @@
   overflow: hidden;
   box-shadow: $base-box-shadow;
 
+
+
   &:hover {
     box-shadow: $hover-box-shadow;
   }
@@ -123,6 +125,39 @@
     padding: 0 1em 2em;
     display: flex;
     justify-content: space-between;
+  }
+
+
+  @mixin button() {
+    border: 1px solid;
+    padding: 0.5em 1em ;
+    border-radius: 2em;
+    text-decoration: none;
+    transition: 0.3s ease all;
+    cursor: pointer;
+  }
+
+  &__button-1 {
+    @include button();
+    border-color: $primary-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+
+  &__button-2 {
+    @include button();
+    border-color: $primary-color;
+    color: white;
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: white;
+      color: $primary-color;
+    }
   }
 
 }

@@ -9,32 +9,40 @@ import './../../scss/Content/ContentPortfolio.scss'
 import PortfolioSort from "./PortfolioSort";
 import PortfolioFilter from "./PortfolioFilter";
 
+import Sort from "../../static-functions/Sort";
+import {CONTENT__UPDATE_FILTER} from "../../constants/content";
+import Modal from "../Modal";
+
 class ContentPortfolio extends React.Component {
     constructor(props) {
         super(props);
 
-        const {price} = this.props.portfolio;
-        price.minPrice = +price.minPrice;
-        price.maxPrice = +price.maxPrice;
-
         this.state = {
-            filter: {
-                value: [price.minPrice, price.maxPrice],
-                defaultValue: [price.minPrice, price.maxPrice],
-                min: price.minPrice,
-                max: price.maxPrice,
-            },
             sort: {by: 'activeDate', order: 'desc'},
+            showModal: false,
         };
 
+        this.swiperParams = {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            rebuildOnUpdate: true,
+        };
+
+        this.showModal = this.showModal.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.updateSort = this.updateSort.bind(this);
     }
 
+    showModal(showModal) {
+        this.setState({showModal});
+    }
+
     // Обновляем стейт фильтра
     setFilter(value) {
-        const {filter} = this.state;
-        this.setState({...filter, value});
+        const {filter} = this.props;
+        filter.value = value;
+
+        this.props.updateFilter(filter);
     }
 
     // Обновляем стэйт блока сортировки
@@ -42,76 +50,67 @@ class ContentPortfolio extends React.Component {
         this.setState({sort});
     }
 
-    sortByDateAsc(a, b) {
-        if (a.activeFrom === b.activeFrom) return 0;
-        return a.activeFrom > b.activeFrom ? 1 : -1;
-    }
-
-    sortByDateDesc(a, b) {
-        if (a.activeFrom === b.activeFrom) return 0;
-        return a.activeFrom > b.activeFrom ? -1 : 1;
-    }
-
-    sortByPriceAsc(a, b) {
-        if (a.priceValue === b.priceValue) return 0;
-        return a.priceValue > b.priceValue ? 1 : -1;
-    }
-
-    sortByPriceDesc(a, b) {
-        if (a.priceValue === b.priceValue) return 0;
-        return a.priceValue > b.priceValue ? -1 : 1;
-    }
-
     render() {
 
-        const params = {
-            slidesPerView: 3,
-            spaceBetween: 30,
-            rebuildOnUpdate: true,
-        };
+        if (this.props.totalItems === 0) {
+            return null;
+        } else {
 
-        // Фильтруем элементы
-        let items = this.props.portfolio.items.filter(item => {
-            const {value} = this.state.filter;
-            const priceValue = +item.priceValue;
-            return priceValue <= value[1] && priceValue >= value[0]
-        });
+            const modal = this.state.showModal
+                ? <Modal {...this.state.showModal} showModal={value => this.showModal(value)}/>
+                : null;
 
-        // Сортируем элементы
-        const {sort} = this.state;
+            // Сортируем элементы
+            const {sort} = this.state;
 
-        switch (sort.by) {
-            case 'priceValue':
-                items = items.sort(((sort.order === 'desc')) ? this.sortByPriceDesc : this.sortByPriceAsc);
-                break;
-            case 'activeDate':
-                items = items.sort(((sort.order === 'desc')) ? this.sortByDateDesc : this.sortByDateAsc);
-                break;
-        }
+            let items;
+
+            switch (sort.by) {
+                case 'priceValue':
+                    items = this.props.items.sort(((sort.order === 'desc')) ? Sort.byPriceDesc : Sort.byPriceAsc);
+                    break;
+                case 'activeDate':
+                    items = this.props.items.sort(((sort.order === 'desc')) ? Sort.byDateDesc : Sort.byDateAsc);
+                    break;
+                default:
+
+            }
+
+            return (
+                <div className="dev-content-portfolio">
+                    <div className="dev-content-portfolio__block">
+                        <PortfolioFilter filter={this.props.filter} setFilter={value => this.setFilter(value)}/>
+                        <PortfolioSort {...this.state.sort} updateSort={value => this.updateSort(value)}/>
+                    </div>
 
 
-        return (
-            <div className="dev-content-portfolio">
-                <div className="dev-content-portfolio__block">
-                    <PortfolioFilter filter={this.state.filter} setFilter={value => this.setFilter(value)}/>
-                    <PortfolioSort {...this.state.sort} updateSort={value => this.updateSort(value)}/>
+                    <Swiper {...this.swiperParams} >
+                        {items.map(item => <div key={item.id}>
+                            <PortfolioItem  {...item} showModal={value => this.showModal(value)}/>
+                        </div>)}
+                    </Swiper>
+
+                    {modal}
                 </div>
-
-
-                <Swiper {...params} >
-                    {items.map(item => <div key={item.id}><PortfolioItem  {...item}/></div>)}
-                </Swiper>
-            </div>
-        );
+            );
+        }
     }
 }
 
 const mapStateProp = state => ({
-    portfolio: state.content.portfolio,
+    totalItems: state.content.portfolio.totalItems,
+    items: state.content.portfolio.items.filter(item => {
+        const {value} = state.content.portfolio.filter;
+        return item.priceValue <= value[1] && item.priceValue >= value[0]
+    }),
+    filter: state.content.portfolio.filter,
+
 });
 
 const mapDispachProps = dispatch => {
-    return {}
+    return {
+        updateFilter: filter => dispatch({type: CONTENT__UPDATE_FILTER, payload: filter}),
+    }
 };
 
 export default connect(mapStateProp, mapDispachProps)(ContentPortfolio);

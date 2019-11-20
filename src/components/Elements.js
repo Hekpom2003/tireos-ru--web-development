@@ -1,18 +1,23 @@
 import React from 'react';
 import {connect} from "react-redux";
 import './../scss/Elements.scss'
+import {Link} from 'react-router-dom';
 
-class Elements extends React.Component{
+class Elements extends React.Component {
     render() {
         return (
             <ul className="div-elements-list">
-                {this.props.elements.map( item => {
+                {this.props.elements.map(item => {
 
-                    const isActive = (item.id === this.props.currentElementId)?'is-active':"";
+                    const {current} = this.props;
 
-                    return <li key={item.id} className={isActive} onClick={()=>this.props.changeElement(item.id)}>
-                        <div className='div-elements-list__title'>{item.name}</div>
-                        <div className='div-elements-list__price'>{item.priceText}</div>
+                    const isActive = (item.code === current.elementCode) ? 'is-active' : "";
+
+                    return <li key={item.id} className={isActive}>
+                        <Link to={"/development/" + current.sectionCode + '/' + item.code + '/'}>
+                            <div className='div-elements-list__title'>{item.name}</div>
+                            <div className='div-elements-list__price'>{item.priceText}</div>
+                        </Link>
                     </li>
                 })}
             </ul>
@@ -22,7 +27,7 @@ class Elements extends React.Component{
 
 const mapStateProp = state => ({
     elements: state.elements,
-    currentElementId: state.current.elementId,
+    current: state.current,
 });
 
 const mapDispachProps = dispatch => {
