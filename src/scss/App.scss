@@ -1,4 +1,10 @@
 
+#root {
+  &.is-loading {
+    filter: blur(2px);
+  }
+}
+
 .web-development {
   display: grid;
   grid-template-columns: 400px 1fr;

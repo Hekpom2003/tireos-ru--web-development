@@ -11,6 +11,8 @@
       text-align: center;
       border: 1px solid $grey-light;
       padding: 0.75em 1.25em;
+      border-radius: $base-border-radius;
+      box-shadow: $base-box-shadow;
     }
 
     .rc-slider-handle {

@@ -26,6 +26,8 @@ class App extends React.Component {
         this.url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://dima.temploid.ru' : "";
         this.url += '/local/ajax/web-development.php';
 
+        this.firstLoad = true; // TODO Костыль для корневого раздела, надо что-то придумать другое
+
 
         this.getDataFromServer = this.getDataFromServer.bind(this);
     }
@@ -41,13 +43,15 @@ class App extends React.Component {
     }
 
     getDataFromServer(params) {
+
+
+
         let body = {};
         body.sectionCode = params.sectionCode || null;
         body.elementCode = params.elementCode || null;
 
-
-
         let getData = false; // Флаг на получение данных
+
 
         if (body.elementCode === null) {
             getData = (body.sectionCode !== this.props.current.sectionCode);
@@ -58,12 +62,17 @@ class App extends React.Component {
             );
         }
 
-        console.log('getData',getData);
-
-
+        console.log('here1',getData);
 
         // Проверяем state чтобы не соответствовал текущему запросу на cервер для избежания зацикливания
-        if (getData) {
+        if (getData && this.firstLoad) {
+
+            console.log('here2');
+
+            document.getElementById('root').classList.add('is-loading');
+
+            // TODO Костыль чтобы на корневой ссылке не зацикливало. Сделать нормально
+            if (body.sectionCode === null && body.elementCode === null && this.firstLoad) this.firstLoad = false;
 
             body = JSON.stringify(body);
 
@@ -73,6 +82,8 @@ class App extends React.Component {
             })
                 .then(res => res.json())
                 .then(json => {
+                    console.log('here',document.getElementById('root').classList);
+                    document.getElementById('root').classList.remove('is-loading');
                     this.props._setDataFromServer(json);
                     this.setState({showPreloader: false})
                 });

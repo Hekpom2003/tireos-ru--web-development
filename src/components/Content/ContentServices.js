@@ -40,13 +40,18 @@ class ContentServices extends React.Component {
 
     getButton() {
 
-        const countItems = this.props.services.length - 8;
+        if (this.props.services.length > 8) {
 
-        const text = (this.state.showAll) ? 'Серыть' : 'Показать еще';
+            const countItems = this.props.services.length - 8;
 
-        return <div className="dev-services-list__show-more">
-            <button className="btn btn--primary-color" onClick={this.stateHandler}>{text} ({countItems})</button>
-        </div>
+            const text = (this.state.showAll) ? 'Серыть' : 'Показать еще';
+
+            return <div className="dev-services-list__show-more">
+                <button className="btn btn--primary-color" onClick={this.stateHandler}>{text} ({countItems})</button>
+            </div>
+        } else {
+            return null;
+        }
     }
 
     render() {
