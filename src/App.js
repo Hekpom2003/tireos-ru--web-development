@@ -44,45 +44,41 @@ class App extends React.Component {
 
     getDataFromServer(params) {
 
-
-
-        let body = {};
-        body.sectionCode = params.sectionCode || null;
-        body.elementCode = params.elementCode || null;
+        let formBody = {};
+        formBody.sectionCode = params.sectionCode || null;
+        formBody.elementCode = params.elementCode || null;
 
         let getData = false; // Флаг на получение данных
 
 
-        if (body.elementCode === null) {
-            getData = (body.sectionCode !== this.props.current.sectionCode);
+        if (formBody.elementCode === null) {
+            getData = (formBody.sectionCode !== this.props.current.sectionCode);
         } else {
             getData = (
-                body.sectionCode !== this.props.current.sectionCode ||
-                body.elementCode !== this.props.current.elementCode
+                formBody.sectionCode !== this.props.current.sectionCode ||
+                formBody.elementCode !== this.props.current.elementCode
             );
         }
 
-        console.log('here1',getData);
+        // TODO Костыль чтобы на корневой ссылке не зацикливало. Сделать нормально
+        if (formBody.sectionCode !== null || formBody.elementCode !== null) this.firstLoad = true;
 
         // Проверяем state чтобы не соответствовал текущему запросу на cервер для избежания зацикливания
         if (getData && this.firstLoad) {
 
-            console.log('here2');
-
             document.getElementById('root').classList.add('is-loading');
 
             // TODO Костыль чтобы на корневой ссылке не зацикливало. Сделать нормально
-            if (body.sectionCode === null && body.elementCode === null && this.firstLoad) this.firstLoad = false;
+            if (formBody.sectionCode === null && formBody.elementCode === null && this.firstLoad) this.firstLoad = false;
 
-            body = JSON.stringify(body);
+            formBody = JSON.stringify(formBody);
 
             fetch(this.url, {
                 method: 'post',
-                body,
+                body: formBody,
             })
                 .then(res => res.json())
                 .then(json => {
-                    console.log('here',document.getElementById('root').classList);
                     document.getElementById('root').classList.remove('is-loading');
                     this.props._setDataFromServer(json);
                     this.setState({showPreloader: false})

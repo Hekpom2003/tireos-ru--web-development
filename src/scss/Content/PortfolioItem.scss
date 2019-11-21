@@ -100,7 +100,9 @@
 
   &__value {
     text-align: right;
-    border-color: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 
     span {
       position: relative;
