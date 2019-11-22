@@ -62,17 +62,18 @@ class PortfolioFilter extends React.Component {
 
     render() {
 
+        const minPricePrint = new Intl.NumberFormat('ru-RU', { minimumFractionDigits:0 }).format(this.state.value[0]);
+        const maxPricePrint = new Intl.NumberFormat('ru-RU', { minimumFractionDigits:0 }).format(this.state.value[1]);
+
         return (
             <div className="dev-portfolio-filter">
                 <div className="dev-portfolio-filter__price">
-                    <input type="text" name="min-price" value={this.state.value[0]}
+                    <input type="text" name="min-price" value={minPricePrint}
                            onChange={e => this.minPriceChange(e)}/>
                     <Range allowCross={false} value={this.state.value} min={this.state.min} max={this.state.max} onChange={this.onSliderChange}/>
-                    <input type="text" name="max-price" value={this.state.value[1]}
+                    <input type="text" name="max-price" value={maxPricePrint}
                            onChange={e => this.maxPriceChange(e)}/>
                 </div>
-
-
             </div>
         );
     }
