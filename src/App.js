@@ -1,18 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
 
 import {Preloder} from "./components/Preloader";
-import Sections from "./components/Sections";
-import Elements from "./components/Elements";
-import Content from "./components/Content";
 
+import './scss/App.scss';
+import Desktop from "./components/deviceType/Desktop";
+import Mobile from "./components/deviceType/Mobile";
+import {connect} from "react-redux";
 import {SECTIONS__SET_ITEMS} from "./constants/sections";
 import {CURRENT__SET_ITEMS} from "./constants/current";
 import {ELEMENTS__SET_ITEMS} from "./constants/elements";
 import {CONTENT__SET_ITEMS} from "./constants/content";
-
-
-import './scss/App.scss';
 
 class App extends React.Component {
     constructor(props) {
@@ -21,6 +18,7 @@ class App extends React.Component {
         this.state = {
             showPreloader: true,
             // siteparams: this.props.match.params,
+            windowWidth: window.innerWidth,
         };
 
         this.url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://dima.temploid.ru' : "";
@@ -28,14 +26,25 @@ class App extends React.Component {
 
         this.firstLoad = true; // TODO Костыль для корневого раздела, надо что-то придумать другое
 
-
         this.getDataFromServer = this.getDataFromServer.bind(this);
+
+        this.onWindowResize = this.onWindowResize.bind(this);
+    }
+
+    onWindowResize(){
+        console.log('onWindowResize');
+        this.setState({windowWidth: window.innerWidth});
     }
 
     componentDidMount() {
         const {params} = this.props.match;
         this.getDataFromServer(params);
+        window.addEventListener('resize', this.onWindowResize);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onWindowResize);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const {params} = this.props.match;
@@ -93,18 +102,20 @@ class App extends React.Component {
                 <Preloder/>
             )
         } else {
-            return (
-                <div className="web-development">
-                    <Sections/>
-                    <Elements/>
-                    <Content/>
-                </div>
-            )
+
+            const deviceType = window.innerWidth < 1024 ? <Mobile /> : <Desktop />;
+
+            console.log('windowWidth: ', this.state.windowWidth, window.innerWidth);
+
+            return ( <div>
+                {deviceType}
+            </div> )
         }
 
 
     }
 }
+
 
 const mapStateProp = state => ({
     current: state.current
@@ -118,7 +129,6 @@ const mapDispachProps = dispatch => {
             if (json.elements) dispatch({type: ELEMENTS__SET_ITEMS, payload: json.elements});
             if (json.content) dispatch({type: CONTENT__SET_ITEMS, payload: json.content});
         },
-
     }
 };
 
