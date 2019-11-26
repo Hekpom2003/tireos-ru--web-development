@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 
-import './../../scss/Content/ContentHeader.scss';
+import '../../../scss/Content/ContentHeader.scss';
 
 class ContentHeader extends React.Component {
     render() {

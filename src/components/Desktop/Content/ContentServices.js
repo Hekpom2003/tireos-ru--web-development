@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 
-import './../../scss/Content/ContentServices.scss';
+import '../../../scss/Content/ContentServices.scss';
 
 class ContentServices extends React.Component {
 

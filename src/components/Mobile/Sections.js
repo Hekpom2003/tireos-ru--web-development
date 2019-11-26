@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
-import '../../scss/Mobile/MobileSections.scss';
+import './Sections.scss';
 
 class Sections extends React.Component {
     constructor(props) {
@@ -35,15 +35,12 @@ class Sections extends React.Component {
             <div className="wdm-sections">
                 <div className="wdm-sections__title">Тип сайта</div>
                 <div className={"select-box " + this.state.opened}>
-                    <div className="select-box__value">
-                        <input type="text" readOnly={true} value={current.name}/>
-                        <button onClick={this.handleClick}/>
-                    </div>
-                    <ul>
+                    <div className="select-box__value" onClick={this.handleClick}>{current.name}</div>
+                    <ul className="select-box__items">
                         {
                             items.map(item => {
                                 return <li key={item.code}>
-                                    <Link to={"/development/" + item.code + '/'}>
+                                    <Link to={"/development/" + item.code + '/'} onClick={this.handleClick}>
                                         {item.name}
                                     </Link>
                                 </li>
@@ -62,6 +59,8 @@ const mapStateProp = state => ({
     sections: state.sections,
 });
 
-const mapDispachProps = dispatch => {return {}};
+const mapDispachProps = dispatch => {
+    return {}
+};
 
 export default connect(mapStateProp, mapDispachProps)(Sections);

@@ -1,17 +1,19 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 import 'swiper/css/swiper.css';
 import Swiper from "react-id-swiper";
-import {connect} from "react-redux";
-import PortfolioItem from "./PortfolioItem";
 
-import './../../scss/Content/ContentPortfolio.scss'
-import PortfolioSort from "./PortfolioSort";
-import PortfolioFilter from "./PortfolioFilter";
 
-import Sort from "../../static-functions/Sort";
-import {CONTENT__UPDATE_FILTER} from "../../constants/content";
-import Modal from "../Modal";
+import PortfolioItem from "./Portfolio/PortfolioItem";
+import PortfolioSort from "./Portfolio/PortfolioSort";
+import Sort from "../../../static-functions/Sort";
+
+import {CONTENT__UPDATE_FILTER} from "../../../constants/content";
+import Modal from "../../Modal";
+
+import './ContentPortfolio.scss'
+import PortfolioFilter from "./Portfolio/PortfolioFilter";
 
 class ContentPortfolio extends React.Component {
     constructor(props) {
@@ -23,9 +25,9 @@ class ContentPortfolio extends React.Component {
         };
 
         this.swiperParams = {
-            slidesPerView: 3,
-            spaceBetween: 30,
+            slidesPerView: 1,
             rebuildOnUpdate: true,
+            spaceBetween: 30,
         };
 
         this.showModal = this.showModal.bind(this);
@@ -77,8 +79,9 @@ class ContentPortfolio extends React.Component {
             }
 
             return (
-                <div className="dev-content-portfolio">
-                    <div className="dev-content-portfolio__block">
+                <div className="wdm-portfolio">
+                    <div className="wdm-portfolio__title">Наши работы</div>
+                    <div className="wdm-portfolio__block">
                         <PortfolioFilter filter={this.props.filter} setFilter={value => this.setFilter(value)}/>
                         <PortfolioSort {...this.state.sort} updateSort={value => this.updateSort(value)}/>
                     </div>

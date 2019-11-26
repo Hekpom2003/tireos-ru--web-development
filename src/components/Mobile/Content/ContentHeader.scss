@@ -1,0 +1,17 @@
+@import "./../../../scss/vars";
+
+.wdm-content-header {
+  margin-bottom: 1em;
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5em;
+  }
+
+  &__description {
+    text-align: center;
+    color: $primary-color;
+  }
+}

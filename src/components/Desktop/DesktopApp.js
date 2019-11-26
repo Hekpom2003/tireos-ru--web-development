@@ -1,9 +1,9 @@
 import React from 'react';
-import Sections from "../Sections";
-import Elements from "../Elements";
-import Content from "../Content";
+import Sections from "./Sections";
+import Elements from "./Elements";
+import Content from "./Content";
 
-class Desktop extends React.Component {
+class DesktopApp extends React.Component {
     render() {
         return (
             <div className="web-development">
@@ -16,4 +16,4 @@ class Desktop extends React.Component {
 }
 
 
-export default Desktop;
+export default DesktopApp;

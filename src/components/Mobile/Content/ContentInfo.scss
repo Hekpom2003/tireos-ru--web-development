@@ -1,0 +1,93 @@
+@import "./../../../scss/vars";
+
+.wdm-content-info {
+  padding: 0;
+  margin: 0;
+
+  li {
+    &:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &__name {}
+  &__price {
+    color: $grey;
+  }
+
+  span {
+    color: $grey;
+  }
+}
+
+.wdm-info-modal {
+  @mixin _window($position){
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: $position;
+  }
+  @include _window(fixed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__overlay {
+    @include _window(absolute);
+    background-color: fade_out(#000,0.5);
+  }
+
+  &__body {
+    position: relative;
+    z-index: 1;
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: white;
+    padding: 2em 1em;
+
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 1.5em;
+    height: 1.5em;
+
+    @mixin closeLines($rotate) {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 1px;
+      left: 50%;
+      height: 100%;
+      background-color: $grey;
+      transform: rotateZ($rotate);
+      transform-origin: center;
+
+      transition: 0.3s ease all;
+
+    }
+
+    &:before {
+      @include closeLines(45deg);
+    }
+
+    &:after {
+      @include closeLines(-45deg);
+    }
+  }
+
+  &__content {
+    .price {
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+
+    .description {
+      font-style: italic;
+    }
+  }
+
+}

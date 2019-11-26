@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import './../scss/Sections.scss';
+import '../../scss/Sections.scss';
 import {Link} from "react-router-dom";
 
 class Sections extends React.Component {

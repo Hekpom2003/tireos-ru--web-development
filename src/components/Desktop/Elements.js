@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import './../scss/Elements.scss'
+import '../../scss/Elements.scss'
 import {Link} from 'react-router-dom';
 
 class Elements extends React.Component {

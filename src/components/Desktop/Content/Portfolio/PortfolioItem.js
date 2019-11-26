@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './../../scss/Content/PortfolioItem.scss';
+import '../../../../scss/Content/PortfolioItem.scss';
 
 class PortfolioItem extends React.Component {
 

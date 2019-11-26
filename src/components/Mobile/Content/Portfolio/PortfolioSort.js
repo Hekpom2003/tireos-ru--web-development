@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './../../scss/Content/PortfolioSort.scss';
+import '../../../../scss/Content/PortfolioSort.scss';
 
 class PortfolioSort extends React.Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class PortfolioSort extends React.Component {
 
         return (
             <div className="dev-portfolio-sort">
-                <div className="dev-portfolio-sort__title">Портировать по:</div>
+                <div className="dev-portfolio-sort__title">Сортировать по:</div>
                 <ul className="dev-portfolio-sort__variants">
                     {
                         sortList.map(item => {

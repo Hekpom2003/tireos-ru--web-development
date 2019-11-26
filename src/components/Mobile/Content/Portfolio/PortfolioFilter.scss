@@ -1,0 +1,19 @@
+@import "./../../../../scss/vars";
+
+.wdm-portfolio-filter {
+  margin-bottom: 2em;
+  &__price {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 1em;
+
+    input {
+      text-align: center;
+      border: 1px solid $grey-light;
+      padding: 0.75em 1.25em;
+      border-radius: $base-border-radius;
+      box-shadow: $base-box-shadow;
+      width: 100%;
+    }
+  }
+}

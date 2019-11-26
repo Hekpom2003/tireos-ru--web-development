@@ -3,9 +3,11 @@ import React from 'react';
 import {Preloder} from "./components/Preloader";
 
 import './scss/App.scss';
-import Desktop from "./components/deviceType/Desktop";
-import Mobile from "./components/deviceType/Mobile";
+import DesktopApp from "./components/Desktop/DesktopApp";
+import MobileApp from "./components/Mobile/MobileApp";
+import {MobileXsApp} from "./components/MobileXs/MobileXsApp";
 import {connect} from "react-redux";
+
 import {SECTIONS__SET_ITEMS} from "./constants/sections";
 import {CURRENT__SET_ITEMS} from "./constants/current";
 import {ELEMENTS__SET_ITEMS} from "./constants/elements";
@@ -17,7 +19,6 @@ class App extends React.Component {
 
         this.state = {
             showPreloader: true,
-            // siteparams: this.props.match.params,
             windowWidth: window.innerWidth,
         };
 
@@ -31,7 +32,7 @@ class App extends React.Component {
         this.onWindowResize = this.onWindowResize.bind(this);
     }
 
-    onWindowResize(){
+    onWindowResize() {
         console.log('onWindowResize');
         this.setState({windowWidth: window.innerWidth});
     }
@@ -103,13 +104,17 @@ class App extends React.Component {
             )
         } else {
 
-            const deviceType = window.innerWidth < 1024 ? <Mobile /> : <Desktop />;
+            const windowWidth = window.innerWidth;
 
-            console.log('windowWidth: ', this.state.windowWidth, window.innerWidth);
+            const deviceType = (windowWidth < 200)
+                ? <MobileXsApp />
+                : (windowWidth < 1024)
+                    ? <MobileApp/>
+                    : <DesktopApp/>;
 
-            return ( <div>
+            return (<div>
                 {deviceType}
-            </div> )
+            </div>)
         }
 
 

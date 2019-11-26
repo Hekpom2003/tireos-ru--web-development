@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 
-import './../../scss/Content/ContentInfo.scss';
+import '../../../scss/Content/ContentInfo.scss';
 
 class ContentInfo extends React.Component {
     render() {

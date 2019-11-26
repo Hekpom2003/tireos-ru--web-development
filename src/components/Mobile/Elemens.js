@@ -2,21 +2,30 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
+import './Elements.scss';
+
 class Elements extends React.Component{
     render() {
         return (
-            <ul className="wdm-elements">
-                {this.props.elements.map(item => {
+            <div className="wdm-elements">
+                <div className="wdm-elements__title">Вид решения</div>
 
-                    const {current} = this.props;
+                <ul className="wdm-elements__items">
+                    {this.props.elements.map(item => {
 
-                    const isActive = (item.code === current.elementCode) ? 'is-active' : "";
+                        const {current} = this.props;
 
-                    return <li key={item.id} className={isActive}>
-                        <Link to={"/development/" + current.sectionCode + '/' + item.code + '/'}>{item.name}</Link>
-                    </li>
-                })}
-            </ul>
+                        const isActive = (item.code === current.elementCode) ? 'is-active' : "";
+
+                        return <li key={item.id} className={isActive}>
+                            <Link to={"/development/" + current.sectionCode + '/' + item.code + '/'}>
+                                {item.name}
+                            </Link>
+                        </li>
+                    })}
+                </ul>
+            </div>
+
         );
     }
 }
