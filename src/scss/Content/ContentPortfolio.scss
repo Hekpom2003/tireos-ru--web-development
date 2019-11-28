@@ -1,7 +1,7 @@
 @import "./../vars";
 
 .dev-content-portfolio {
-  width: 1070px;
+  width: 1040px;
 
   &__block {
     display: flex;
@@ -12,8 +12,21 @@
   .swiper-slide {
     height: auto;
   }
+
+  .swiper-button {
+    &-prev{
+      filter: grayscale(1);
+    }
+
+    &-next{
+      filter: grayscale(1);
+    }
+  }
 }
 
 .dev-portfolio-filter {
-  width: 500px
+  @media screen and (min-width: 1200px) {
+    width: 500px
+  }
+
 }

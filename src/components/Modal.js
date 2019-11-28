@@ -17,7 +17,9 @@ class Modal extends React.Component {
                 comment: '',
             },
             showSuccess: false,
+            formErrors: {name: '',phone:''}
         };
+
 
         this.callbackTitles = [
             {title: "телефон", id: 6},
@@ -44,21 +46,35 @@ class Modal extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const formData = new FormData(e.target);
+        console.log("FORM", this.state.form);
 
-        formData.set('form_hidden_12', window.location.origin + window.location.pathname);
-        formData.set('form_hidden_13', this.props.link);
-        formData.set('WEB_FORM_ID', "2");
-        formData.set('web_form_submit', "Отправить");
+        const {form} = this.state;
 
-        fetch(this.url, {
-            method: 'post',
-            body: formData,
-        })
-            .then(res => res.json())
-            .then(json => {
-                if (json.isFormNote === "Y") this.setState({showSuccess: true})
-            });
+        const formErrors = {};
+
+        formErrors.name = (form.name === '') ? 'is-error' : '';
+        formErrors.phone = (form.phone === '') ? 'is-error' : '';
+
+
+        if (formErrors.name === '' && formErrors.phone === ''){
+            const formData = new FormData(e.target);
+
+            formData.set('form_hidden_12', window.location.origin + window.location.pathname);
+            formData.set('form_hidden_13', this.props.link);
+            formData.set('WEB_FORM_ID', "2");
+            formData.set('web_form_submit', "Отправить");
+
+            fetch(this.url, {
+                method: 'post',
+                body: formData,
+            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.isFormNote === "Y") this.setState({showSuccess: true})
+                });
+        } else this.setState({formErrors})
+
+
 
     }
 
@@ -99,12 +115,12 @@ class Modal extends React.Component {
             <div className="dev-modal__title">Взять за основу - <span>{props.name}</span></div>
             <form name="" onSubmit={this.onSubmit}>
                 <div className="dev-modal__input">
-                    <input type="text" name="form_text_4" className={isFilled.name} id="formName"
+                    <input type="text" name="form_text_4" className={isFilled.name +" " + this.state.formErrors.name} id="formName"
                            onChange={this.onChangeName}/>
                     <label htmlFor="formName">Как к вам обращаться</label>
                 </div>
                 <div className="dev-modal__input">
-                    <InputMask mask={"+7 999 999-99-99"} id="formPhone" className={isFilled.phone} name="form_text_5"
+                    <InputMask mask={"+7 (\\999) 999-99-99"} id="formPhone" className={isFilled.phone +" " + this.state.formErrors.phone} name="form_text_5"
                                onChange={this.onChangePhone}/>
                     <label htmlFor="formPhone">Номер телефона</label>
                 </div>

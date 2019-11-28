@@ -1,9 +1,7 @@
 import React from 'react';
 
 import 'swiper/css/swiper.css';
-import Swiper from "react-id-swiper";
 import {connect} from "react-redux";
-import PortfolioItem from "./Portfolio/PortfolioItem";
 
 import '../../../scss/Content/ContentPortfolio.scss'
 import PortfolioSort from "./Portfolio/PortfolioSort";
@@ -12,6 +10,7 @@ import PortfolioFilter from "./Portfolio/PortfolioFilter";
 import Sort from "../../../static-functions/Sort";
 import {CONTENT__UPDATE_FILTER} from "../../../constants/content";
 import Modal from "../../Modal";
+import {PortfolioSlider} from "./Portfolio/PortfolioSlider";
 
 class ContentPortfolio extends React.Component {
     constructor(props) {
@@ -22,16 +21,14 @@ class ContentPortfolio extends React.Component {
             showModal: false,
         };
 
-        this.swiperParams = {
-            slidesPerView: 3,
-            spaceBetween: 30,
-            rebuildOnUpdate: true,
-        };
+
 
         this.showModal = this.showModal.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.updateSort = this.updateSort.bind(this);
     }
+
+
 
     showModal(showModal) {
         this.setState({showModal});
@@ -83,12 +80,7 @@ class ContentPortfolio extends React.Component {
                         <PortfolioSort {...this.state.sort} updateSort={value => this.updateSort(value)}/>
                     </div>
 
-
-                    <Swiper {...this.swiperParams} >
-                        {items.map(item => <div key={item.id}>
-                            <PortfolioItem  {...item} showModal={value => this.showModal(value)}/>
-                        </div>)}
-                    </Swiper>
+                    <PortfolioSlider items={items}/>
 
                     {modal}
                 </div>

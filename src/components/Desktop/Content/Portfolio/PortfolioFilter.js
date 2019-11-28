@@ -10,18 +10,9 @@ class PortfolioFilter extends React.Component {
 
         this.state = {
             allowCross: false,
-            focusEvent: false,
         };
 
-        this.handlerChange = this.handlerChange.bind(this);
         this.onSliderChange = this.onSliderChange.bind(this);
-    }
-
-    handlerChange(e, index) {
-        const value = e.target.value.replace(/\s/g, '');
-        const oldValue = this.props.filter.value[index];
-        console.log({value, oldValue});
-
     }
 
     onSliderChange = (value) => {
@@ -47,18 +38,10 @@ class PortfolioFilter extends React.Component {
         return (
             <div className="dev-portfolio-filter">
                 <div className="dev-portfolio-filter__price">
-                    <input type="text" name="min-price" value={priceText[0]}
-                           onChange={e => this.handlerChange(e, 0)}
-                           onFocus={() => this.setState({focusEvent: 0})}
-                           onBlur={()=> this.setState({focusEvent:false})}
-                    />
+                    <input type="text" name="min-price" value={priceText[0]} readOnly={true}/>
                     <Range allowCross={false} value={filter.value} min={filter.min} max={filter.max}
                            onChange={this.onSliderChange}/>
-                    <input type="text" name="max-price" value={priceText[1]}
-                           onChange={e => this.handlerChange(e, 1)}
-                           onFocus={() => this.setState({focusEvent: 1})}
-                           onBlur={()=> this.setState({focusEvent:false})}
-                    />
+                    <input type="text" name="max-price" value={priceText[1]} readOnly={true}/>
                 </div>
             </div>
         );

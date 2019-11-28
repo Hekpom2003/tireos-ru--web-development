@@ -22,7 +22,7 @@ class App extends React.Component {
             windowWidth: window.innerWidth,
         };
 
-        this.url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://dima.temploid.ru' : "";
+        this.url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'https://temploid.ru' : "";
         this.url += '/local/ajax/web-development.php';
 
         this.firstLoad = true; // TODO Костыль для корневого раздела, надо что-то придумать другое
